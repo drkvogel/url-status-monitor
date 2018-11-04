@@ -1,24 +1,27 @@
 
 
+remember, OO JS...
 
-### yo webapp 
+## done
 
-== generator-webapp? is the one I used for bbquizzes?
-where is jQuery? where is Bootstrap? nothing seems to work...
+### scaffolding
 
-### yo
+#### yeoman
 
 yo pwa worked for ocpcares
 yo h5package fails
 yo webapp fails
     $ is not defined - where is jquery?
     where is bootstrap
+    == generator-webapp? is the one I used for bbquizzes?
+    where is jQuery? where is Bootstrap? nothing seems to work...
 yo static-webapp fails...
 
-### html5boilerplate
+#### html5boilerplate
 
 no hot reload
 use serve/pyserve to serve locally
+or node `http-server`
 
 ### SVG Editors
 
