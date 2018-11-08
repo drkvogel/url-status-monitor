@@ -2,6 +2,12 @@
 
 remember, OO JS...
 
+new Button()?
+
+possible tdd test e.g. function onClickRedButton()
+document.getElementById('svg1').contentDocument.getElementById('redLight').css('fill') = 'white';
+
+
 ## done
 
 ### scaffolding

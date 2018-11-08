@@ -1,8 +1,26 @@
 
-(function () { // Immediately-Invoked Function Expression (IIFE) / Anonymous closure: hide vars from global namespace
-    // used to set "use strict" for whole scope so jslint doesn't complain, but then have to indent whole scope...
+(function () {
     'use strict';
+
+
+    var html = '<div class="statusPanel"><div class="trafficLights" style="text-align: center;">' +
+        '<object id="svg1" type="image/svg+xml" data="img/traffic-lights-vscode.svg">Your browser doesn\'t support objects.</object>' +
+        '</div></div>';
+
     var svg = document.getElementById('svg1');
+
+    function onClickCreate() {
+        console.log('Create button clicked');
+        var div = document.createElement('div');
+        var p = document.createElement('p');
+        var text = document.createTextNode('stuff');
+        p.appendChild(text);
+        div.appendChild(p);
+        // div.appendChild(p).appendChild(text);
+        $('#statusContainer').append(div);
+        // var redLight = svg.contentDocument.getElementById('redLight');
+        // $(redLight).css('fill', 'white');
+    }   
 
     function onClickRedButton() {
         console.log('Red button clicked');
@@ -18,6 +36,7 @@
 
     $('#redButton').on('click', onClickRedButton);
     $('#greenButton').on('click', onClickGreenButton);
+    $('#createStatusPanel').on('click', onClickCreate);
 
     $().ready(function () { //$(document).ready(
         console.log('Document ready');
