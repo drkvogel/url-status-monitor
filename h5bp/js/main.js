@@ -2,24 +2,24 @@
 (function () {
     'use strict';
 
-
-    var html = '<div class="statusPanel"><div class="trafficLights" style="text-align: center;">' +
+    var html = '<div style="display: inline; float: left" class="statusPanel"><div class="trafficLights" style="text-align: center;">' +
         '<object id="svg1" type="image/svg+xml" data="img/traffic-lights-vscode.svg">Your browser doesn\'t support objects.</object>' +
         '</div></div>';
+
+    // function StatusPanel() {
+
+    // } 
 
     var svg = document.getElementById('svg1');
 
     function onClickCreate() {
         console.log('Create button clicked');
-        var div = document.createElement('div');
-        var p = document.createElement('p');
-        var text = document.createTextNode('stuff');
-        p.appendChild(text);
-        div.appendChild(p);
-        // div.appendChild(p).appendChild(text);
-        $('#statusContainer').append(div);
-        // var redLight = svg.contentDocument.getElementById('redLight');
-        // $(redLight).css('fill', 'white');
+        var div = document.createElement('div'),
+            p = document.createElement('p'),
+            text = document.createTextNode('stuff');
+        div.appendChild(p.appendChild(text));
+        // $('#statusContainer').append(div);
+        $('#statusContainer').append(html);
     }   
 
     function onClickRedButton() {
