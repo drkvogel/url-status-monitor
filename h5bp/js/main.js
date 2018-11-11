@@ -6,9 +6,34 @@
         '<object id="svg1" type="image/svg+xml" data="img/lights.svg">Your browser doesn\'t support objects.</object>' +
         '</div></div>';
 
-    // function StatusPanel() {
+    var statusTimeout = 1000; // xxx
 
-    // } 
+    function StatusPanel(id, name, url) {
+        this.id = id;
+        this.name = name;
+        this.url = url;
+
+        // setTimeout(() => { // es6?
+            
+        // }, statusTimeout);
+
+        function checkURL() {
+            $.ajax({
+                url: this.url,
+                complete: checkComplete,
+                success: stuff,
+                error: stuff,
+                statusCode: {
+                    404: function() {
+                      alert( "page not found" );
+                    }
+                }
+            });
+        }
+        setTimeout(checkURL, statusTimeout);
+    }
+
+    var statusPanel1 = new StatusPanel(1, "Test", "http://localhost:8080/status");
 
     var svg = document.getElementById('svg1');
 
