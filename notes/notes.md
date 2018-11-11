@@ -1,11 +1,23 @@
 
 
 remember, OO JS...
+The constructor function is JavaScript's version of a class.
 
 new Button()?
 
 possible tdd test e.g. function onClickRedButton()
 document.getElementById('svg1').contentDocument.getElementById('redLight').css('fill') = 'white';
+
+### Firefox layout bug
+
+raise a bug in Firefox:
+Dynamically generated elements floated left do not render.
+Firefox 63.0.1 (64-bit)
+Works on Google Chrome Version 70.0.3538.77 (Official Build) (64-bit)
+Firefox layout bug on div append - JSFiddle (https://jsfiddle.net/chrisjbird/xpvt214o/935503/) (but can't reproduce)
+
+
+use flexbox?
 
 
 
