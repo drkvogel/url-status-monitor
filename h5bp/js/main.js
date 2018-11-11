@@ -3,7 +3,7 @@
     'use strict';
 
     var html = '<div style="display: inline; float: left" class="statusPanel"><div class="trafficLights" style="text-align: center;">' +
-        '<object id="svg1" type="image/svg+xml" data="img/traffic-lights-vscode.svg">Your browser doesn\'t support objects.</object>' +
+        '<object id="svg1" type="image/svg+xml" data="img/lights.svg">Your browser doesn\'t support objects.</object>' +
         '</div></div>';
 
     // function StatusPanel() {
