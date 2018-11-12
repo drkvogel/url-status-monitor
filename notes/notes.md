@@ -1,12 +1,22 @@
 
+# todo
+
+make Flask server production-ready (debug off, ...?)
 
 remember, OO JS...
-The constructor function is JavaScript's version of a class.
-
 new Button()?
+>The constructor function is JavaScript's version of a class.
 
-possible tdd test e.g. function onClickRedButton()
-document.getElementById('svg1').contentDocument.getElementById('redLight').css('fill') = 'white';
+## defer
+
+possible tdd test
+
+```js
+if (document.getElementById('svg1').contentDocument.getElementById('redLight').css('fill') === 'red') {
+    // test passed
+)  
+```
+
 
 ### Firefox layout bug
 
@@ -17,7 +27,11 @@ Works on Google Chrome Version 70.0.3538.77 (Official Build) (64-bit)
 Firefox layout bug on div append - JSFiddle (https://jsfiddle.net/chrisjbird/xpvt214o/935503/) (but can't reproduce)
 
 
-use flexbox?
+use flexbox?\
+
+### IIFE
+
+do we need? hides vars from debugger
 
 
 
