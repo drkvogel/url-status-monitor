@@ -12,17 +12,12 @@
         this.id = id;
         this.name = name;
         this.url = url;
-
-        // setTimeout(() => { // es6?
-            
-        // }, statusTimeout);
-
         function checkURL() {
             $.ajax({
                 url: this.url,
-                complete: checkComplete,
-                success: stuff,
-                error: stuff,
+                complete: onComplete,
+                success: onSuccess,
+                error: onError,
                 statusCode: {
                     404: function() {
                       alert( "page not found" );
@@ -30,6 +25,10 @@
                 }
             });
         }
+        function onSuccess() { alert("onSuccess"); }
+        function onComplete() { alert("onComplete: " + url); }
+        function onError() { alert("onError"); }
+
         setTimeout(checkURL, statusTimeout);
     }
 
@@ -37,12 +36,25 @@
 
     var svg = document.getElementById('svg1');
 
+    function onClickInstantiate() {
+        console.log('Instantiate button clicked');
+        var panel = new StatusPanel(1, "Test", "http://localhost:8080/status");
+        // var div = document.createElement('div'),
+        //     p = document.createElement('p'),
+        //     text = document.createTextNode('stuff');
+        // div.appendChild(p.appendChild(text));
+        // div.setAttribute('id', 'statusPanel');
+        // // $('#statusContainer').append(div);
+        // $('#statusContainer').append(html);
+    }   
+
     function onClickCreate() {
         console.log('Create button clicked');
         var div = document.createElement('div'),
             p = document.createElement('p'),
             text = document.createTextNode('stuff');
         div.appendChild(p.appendChild(text));
+        div.setAttribute('id', 'statusPanel');
         // $('#statusContainer').append(div);
         $('#statusContainer').append(html);
     }   
@@ -62,6 +74,7 @@
     $('#redButton').on('click', onClickRedButton);
     $('#greenButton').on('click', onClickGreenButton);
     $('#createStatusPanel').on('click', onClickCreate);
+    $('#instantiateStatusPanel').on('click', onClickInstantiate);
 
     $().ready(function () { //$(document).ready(
         console.log('Document ready');
@@ -72,6 +85,8 @@
         }
         console.log('LOCAL: ' + LOCAL);
     });
+
+    debugger;
 }());
 
 console.log('main.js ready');
