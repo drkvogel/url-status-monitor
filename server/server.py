@@ -35,9 +35,12 @@ def close_connection(e):
 
 @app.route("/")
 def index():
-    msg = "Hello, World from index"
-    html = "<html><head><title>Route: &#47;</title></head><body><p>string: %s</p></body></html>" % msg
-    return html
+    # msg = "Hello, World from index"
+    # html = "<html><head><title>Route: &#47;</title></head><body><p>string: %s</p></body></html>" % msg
+    # return html
+
+    # templates dir is hardcoded?
+    return render_template('index.html')
 
 @app.route("/config")
 def config():
@@ -50,6 +53,10 @@ def config():
     # msg += "Python version: " + sys.version	# Python version: 3.6.5 [...]
     html = "<html><head><title>Route: &#47;</title></head><body><p>string: %s</p></body></html>" % msg
     return html
+
+@app.route("/status")
+def status():
+    return render_template('status.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
