@@ -5,7 +5,9 @@ make Flask server production-ready (debug off, ...?)
 
 remember, OO JS...
 new Button()?
->The constructor function is JavaScript's version of a class.
+>The constructor function is JavaScript's version of a class
+
+3rd table to map lights to configs?
 
 ## defer
 
@@ -75,6 +77,17 @@ generate a page (from a template) that has a div for each light
 creates a page with multiple lights from ids
     how?
 the lights start checking
+
+### fake news
+
+What is fake news and can you identify it? - BBC News (https://www.bbc.co.uk/news/av/technology-46149888/what-is-fake-news-and-how-can-you-identify-it)
+Fake News - BBC News (https://www.bbc.co.uk/news/topics/cjxv13v27dyt/fake-news)
+Steam bug allowed unlimited free downloads - BBC News (https://www.bbc.co.uk/news/technology-46183000)
+A year in fake news in Africa - BBC News (https://www.bbc.co.uk/news/world-africa-46127868)
+The digital epidemic killing Indians - BBC News (https://www.bbc.co.uk/news/av/stories-46152427/the-digital-epidemic-killing-indians)
+Russian disinformation and the 'lab of death' - BBC News (https://www.bbc.co.uk/news/av/world-46157507/russian-disinformation-and-the-georgian-lab-of-death)
+Burned to death because of a rumour on WhatsApp - BBC News (https://www.bbc.co.uk/news/world-latin-america-46145986)
+
 
 
 ## done
