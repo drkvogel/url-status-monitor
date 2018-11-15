@@ -4,7 +4,12 @@
 
 ## todo
 
+hmmm... is escaping those quotes going to cause a problem for jinja? do they need to be escaped?
+```html
+<script>window.jQuery || document.write('<script src="{{ url_for(\'static\', filename=\'js/vendor/jquery-3.3.1.min.js\') }}"><\/script>')</script>
+```
 
+venv?
 
 ### Server status widget
 

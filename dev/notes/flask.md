@@ -28,3 +28,11 @@ $ python -m flask run
  * Debug mode: on
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
  ```
+
+
+flask.cli.NoAppException
+
+flask.cli.NoAppException: Failed to find Flask application or factory in module "server". Use "FLASK_APP=server:name to specify one.
+
+flask.cli.NoAppException: module 'server' has no attribute 'app'
+
