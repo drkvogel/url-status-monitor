@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html class="no-js" lang="">
   <head>
-    {% block head %}
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <!-- <title>NewsNow tech test by Chris Bird (chrisjbird@gmail.com)</title> -->
@@ -13,14 +12,14 @@
     <!-- Place favicon.ico in the root directory -->
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
-    {% endblock %}
   </head>
   <body>
     <!--[if lte IE 9]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
     <![endif]-->
-    <h2 style="text-align: center;">URL Status Monitor</h2>
-    <p style="text-align: center;"><small>For NewsNow by Chris Bird (<a href="mailto:chrisjbird@gmail.com">chrisjbird@gmail.com</a></small></p>
+    {% block header %}
+    {% endblock %}
+    {% include "navbar.html" %}
     {% block body %}
     {% endblock %}
     <script src="js/vendor/modernizr-3.6.0.min.js"></script>
