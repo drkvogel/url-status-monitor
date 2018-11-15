@@ -1,4 +1,4 @@
-from flask import Flask, render_template, g, request
+from flask import Flask, render_template, g, request, jsonify
 import sqlite3
 
 # set templates folder here
@@ -32,16 +32,14 @@ def index():
 def test():
     return render_template('test.html')
 
-@app.route("/config")
-def config():
-    config = query_db("SELECT * FROM configs WHERE id = ?", [1], one=True)
-    if config is None:
-        msg = "Config not found"
-        raise msg	# ??
-    else:
-        msg =  "<p>Config: id: %s, name: %s</p>\n" % (config["id"], config["name"])
-    
-    config_id = request.args.get('id')
+    # config = query_db("SELECT * FROM configs WHERE id = ?", [1], one=True)
+    # if config is None:
+    #     msg = "Config not found"
+    #     raise msg	# ??
+    # else:
+    #     msg =  "<p>Config: id: %s, name: %s</p>\n" % (config["id"], config["name"])
+
+def get_lights(config_id):
     query = (
         "SELECT c.id AS config_id, c.name AS config_name,"
         " l.id AS light_id, l.name AS light_name, l.url AS light_url"
@@ -50,6 +48,27 @@ def config():
 		" AND c.id = ?"
     )
     lights = query_db(query, [config_id])
+    return lights
+
+@app.route("/getconfig")
+def get_config():
+    config_id = request.args.get('id')
+    lights = get_lights(config_id)
+    data = [] # https://stackoverflow.com/questions/34715593/rows-returned-by-pyodbc-are-not-json-serializable
+    for row in lights:
+        # data.append([x for x in row]) 
+        data.append(list(row))
+    return jsonify(data)	
+
+@app.route("/showconfig")
+def show_config():
+    config_id = request.args.get('id')
+    lights = get_lights(config_id)
+    if lights == []:
+        msg = 'Error: no lights found for config_id: ' + str(config_id)
+    else:
+        #msg =  "<p>Config: id: %s, name: %s</p>\n" % (config["id"], config["name"])
+        msg =  "<p>Config: id: %s\n" % (config_id)
     table = '<table><tr><th>id</th><th>name</th><th>url</th><tr>'
     for light in lights:
         table += "<tr><td>%s</td><td>%s</td><td>%s</td></tr>" % (light['light_id'], light['light_name'], light['light_url'])
