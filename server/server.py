@@ -1,8 +1,7 @@
 from flask import Flask, render_template, g, request, jsonify
 import sqlite3
 
-# set templates folder here
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__, template_folder='templates') # set templates folder here
 DB = './config.db'
 
 def get_db():
@@ -32,13 +31,6 @@ def index():
 def test():
     return render_template('test.html')
 
-    # config = query_db("SELECT * FROM configs WHERE id = ?", [1], one=True)
-    # if config is None:
-    #     msg = "Config not found"
-    #     raise msg	# ??
-    # else:
-    #     msg =  "<p>Config: id: %s, name: %s</p>\n" % (config["id"], config["name"])
-
 def get_lights(config_id):
     query = (
         "SELECT c.id AS config_id, c.name AS config_name,"
@@ -47,7 +39,7 @@ def get_lights(config_id):
         " WHERE c.id = cl.id_config AND l.id = cl.id_light"
 		" AND c.id = ?"
     )
-    lights = query_db(query, [config_id])
+    lights = query_db(query, [config_id]) # returns list of Row objects
     return lights
 
 @app.route("/getconfig")
@@ -55,9 +47,12 @@ def get_config():
     config_id = request.args.get('id')
     lights = get_lights(config_id)
     data = [] # https://stackoverflow.com/questions/34715593/rows-returned-by-pyodbc-are-not-json-serializable
-    for row in lights:
-        # data.append([x for x in row]) 
-        data.append(list(row))
+    for row in lights: # build list of dicts for JSON
+        light = {}
+        light['id']     = row['light_id']
+        light['name']   = row['light_name']
+        light['url']    = row['light_url']
+        data.append(light)
     return jsonify(data)	
 
 @app.route("/showconfig")
@@ -81,3 +76,4 @@ def status():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
