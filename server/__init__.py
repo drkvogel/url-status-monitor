@@ -2,7 +2,7 @@ from flask import Flask, render_template, g, request, jsonify
 import sqlite3
 
 app = Flask(__name__, template_folder='templates') # set templates folder here
-DB = './config.db'
+DB = './server/config.db' # needs './server/' when run from run script in parent folder, why?
 
 def get_db():
     db = getattr(g, '_database', None)

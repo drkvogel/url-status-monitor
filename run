@@ -4,3 +4,5 @@ export FLASK_APP=server
 export FLASK_ENV=development
 flask run --host=0.0.0.0 --port=5000
 
+# in ./server/__init__.py, DB = './server/config.db' needs './server/' when run from run script in parent folder, why?
+# i.e. why is the database path relative to the root (here), whereas the templates directory is relative to the file?
