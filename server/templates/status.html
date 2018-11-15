@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block header %}
-<h2 style="text-align: center;">URL Status Monitor</h2>
+    <h2 style="text-align: center;">URL Status Monitor</h2>
 {% endblock %}
 
 {% block body %}
     <div id="statusPanel">
       <div id="trafficLights" style="text-align: center;">
-         <object id="svg1" type="image/svg+xml" data="img/lights.svg">Your browser doesn't support objects.</object>      
+         <object id="svg1" type="image/svg+xml" data="{{ url_for('static', filename='img/lights.svg') }}">Your browser doesn't support objects.</object>      
       </div>
       <div id="buttons" style="text-align: center;"> 
         <button id="redButton">Red</button>
@@ -19,4 +19,5 @@
     <div id="statusContainer">
       <p>statusContainer</p>
     </div>
+{% include "js.html" %}
 {% endblock %}

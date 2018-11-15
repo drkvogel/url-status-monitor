@@ -18,16 +18,12 @@
     <!--[if lte IE 9]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
     <![endif]-->
-    {% block header %}
-    {% endblock %}
-    {% include "navbar.html" %}
-    {% block body %}
-    {% endblock %}
-    <script src="{{ url_for('static', filename='js/vendor/modernizr-3.6.0.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='https://code.jquery.com/jquery-3.3.1.min.js') }}" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <!-- following causes syntax highlighting error but is valid HTML/JS after processing by Jinja -->
-    <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='js/vendor/jquery-3.3.1.min.js') }}"><\/script>')</script>
-    <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block header %}
+{% endblock %}
+  
+{% include "navbar.html" %}
+
+{% block body %}
+{% endblock %}
   </body>
 </html>
