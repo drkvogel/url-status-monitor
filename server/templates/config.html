@@ -18,13 +18,10 @@
     <![endif]-->
     <h2 style="text-align: center;">URL Status Monitor</h2>
     <p style="text-align: center;"><small>For NewsNow by Chris Bird (<a href="mailto:chrisjbird@gmail.com">chrisjbird@gmail.com</a></small></p>
-    <ul>
-      <li><a href="./config">./config</a></li>
-      <li><a href="./config?id=1">./config?id=1</a></li>
-      <li><a href="./status">./status</a></li>
-    </ul>
+    <p>message: {{ msg|safe }}</p>
     <div id="configs">
-        <p>Configurations</p>
+        <p>Configuration {{ config_id }}</p>
+        {{ lights|safe }}
     </div>
     <script src="js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>

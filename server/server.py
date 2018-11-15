@@ -1,4 +1,4 @@
-from flask import Flask, render_template, g
+from flask import Flask, render_template, g, request
 import sqlite3
 
 # set templates folder here
@@ -37,22 +37,21 @@ def config():
         raise msg	# ??
     else:
         msg =  "<p>Config: name: %s, config: %s</p>\n" % (config["name"], config["config"])
-
-    config_id = 1
+    
+    config_id = request.args.get('id')
     query = (
-        "SELECT c.id AS config_id, c.name AS config_name," 
+        "SELECT c.id AS config_id, c.name AS config_name,"
         " l.id AS light_id, l.name AS light_name, l.url AS light_url"
-        " FROM configs c, lights l"
-        " WHERE c.id = ?"   # cart prod??
+        " FROM configs c, configs_lights cl, lights l"
+        " WHERE c.id = cl.id_config AND l.id = cl.id_light"
+		" AND c.id = ?"
     )
     lights = query_db(query, [config_id])
-    msg += '<table><tr><th>id</th><th>name</th><th>url</th><tr>'
+    table = '<table><tr><th>id</th><th>name</th><th>url</th><tr>'
     for light in lights:
-        msg += "<tr><td>%s</td><td>%s</td><td>%s</td></tr>" % (light['light_id'], light['light_name'], light['light_url'])
-    msg += '</table>\n'
-
-    html = "<html><head><title>Route: &#47;config</title></head><body>%s</body></html>" % msg
-    return html
+        table += "<tr><td>%s</td><td>%s</td><td>%s</td></tr>" % (light['light_id'], light['light_name'], light['light_url'])
+    table += '</table>\n'
+    return render_template('config.html', msg=msg, config_id=config_id, lights=table)
 
 @app.route("/status")
 def status():
@@ -78,3 +77,5 @@ if __name__ == '__main__':
         # so we can access them either by index or by key
 
     # cur = get_db().cursor()
+
+    # query_string = request.query_string
