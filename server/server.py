@@ -29,6 +29,10 @@ def close_connection(e):
 def index():
     return render_template('index.html')
 
+@app.route("/test")
+def test():
+    return render_template('test.html')
+
 @app.route("/config")
 def config():
     config = query_db("SELECT * FROM configs WHERE id = ?", [1], one=True)
