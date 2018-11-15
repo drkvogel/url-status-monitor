@@ -1,4 +1,5 @@
-from flask import Flask, render_template, g, request, jsonify
+
+from flask import Flask, render_template, g, request, jsonify, abort
 import sqlite3
 
 app = Flask(__name__, template_folder='templates') # set templates folder here
@@ -71,9 +72,29 @@ def show_config():
     table += '</table>\n'
     return render_template('config.html', msg=msg, config_id=config_id, lights=table)
 
+
 @app.route("/status")
 def status():
-    return render_template('status.html')
+    return render_template("status.html")
+
+@app.route("/url1")
+def url1():
+    # return 'url1'
+    # pass
+    abort(403)
+    # abort(Response('Hello World'))
+
+@app.route("/url2")
+def url2():
+    return 'url2'
+
+@app.route("/url3")
+def url3():
+    return 'url3'
+
+@app.route("/url4")
+def url4():
+    return 'url4'
 
 if __name__ == '__main__':
     app.run(debug=True)
