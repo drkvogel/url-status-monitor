@@ -40,7 +40,7 @@ def config():
         msg = "Config not found"
         raise msg	# ??
     else:
-        msg =  "<p>Config: name: %s, config: %s</p>\n" % (config["name"], config["config"])
+        msg =  "<p>Config: id: %s, name: %s</p>\n" % (config["id"], config["name"])
     
     config_id = request.args.get('id')
     query = (
