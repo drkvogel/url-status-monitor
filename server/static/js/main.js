@@ -1,5 +1,5 @@
 
-(function () {
+// (function () {
     'use strict';
 
     var html = '<div style="display: inline; float: left" class="statusPanel"><div class="trafficLights" style="text-align: center;">' +
@@ -8,11 +8,21 @@
 
     var statusTimeout = 1000; // xxx
 
-    function StatusPanel(id, name, url) {
+    function StatusPanel(id, name, url, freq) {
         this.id = id;
         this.name = name;
         this.url = url;
+        console.log('StatusPanel(id = ' + id + ', name='+name+', url='+this.url+', freq='+freq+')');
+        function render() {
+            var div = document.createElement('div'),
+            p = document.createElement('p'),
+            text = document.createTextNode(name);
+            div.appendChild(p.appendChild(text));
+            div.setAttribute('id', 'statusPanel'+id);
+            $('#statusContainer').append(div);
+        }
         function checkURL() {
+            console.log('checkUrl(): ' + url);
             $.ajax({
                 url: this.url,
                 complete: onComplete,
@@ -25,25 +35,22 @@
                 }
             });
         }
-        function onSuccess() { alert("onSuccess"); }
-        function onComplete() { alert("onComplete: " + url); }
+        function onSuccess() { console.log("light id "+id+" onSuccess"); }
+        function onComplete() { console.log("light id "+id+" checked url: " + url); }
         function onError() { alert("onError"); }
 
-        setTimeout(checkURL, statusTimeout);
+        render();
+        setTimeout(checkURL, freq * 100);  // just once for testing
+        // setInterval(checkURL, freq * 1000);
     }
 
-    var statusPanel1 = new StatusPanel(1, "Test", "http://localhost:8080/status");
+    //var statusPanel1 = new StatusPanel(1, "Test", "http://localhost:8080/status");
 
     var svg = document.getElementById('svg1');
 
     function onClickInstantiate() {
         console.log('Instantiate button clicked');
-        var panel = new StatusPanel(1, "Test", "http://localhost:8080/status");
-        // var div = document.createElement('div'),
-        //     p = document.createElement('p'),
-        //     text = document.createTextNode('stuff');
-        // div.appendChild(p.appendChild(text));
-        // div.setAttribute('id', 'statusPanel');
+        var panel = new StatusPanel(1, "Test", "http://localhost:8080/status", 10);
         // // $('#statusContainer').append(div);
         // $('#statusContainer').append(html);
     }   
@@ -78,15 +85,27 @@
 
     $().ready(function () { //$(document).ready(
         console.log('Document ready');
-        var LOCAL = false;
-        var loc = location.toString().split('://')[1]; // strip off http://, https://
-        if (loc.substr(0, 9) === 'localhost') { // served locally
-            LOCAL = true;
-        }
-        console.log('LOCAL: ' + LOCAL);
+        $.getJSON("/getconfig?id=1", function(data) {
+            console.log('got data: ' + data);
+            $.each(data, function(i, light) {
+                console.log('object: ' + i);
+                // var freq = object.freq, url = object.url;
+                // console.log('freq: ' + freq + ', url: '+ url);
+                var panel = new StatusPanel(light.id, light.name, light.url, light.freq);
+                // $.each(object, function(j, value) {
+                //     console.log(j + '=' + value);
+                // })
+            })
+        })
+        // var LOCAL = false;
+        // var loc = location.toString().split('://')[1]; // strip off http://, https://
+        // if (loc.substr(0, 9) === 'localhost') { // served locally
+        //     LOCAL = true;
+        // }
+        // console.log('LOCAL: ' + LOCAL);
     });
 
-    debugger;
-}());
+    // debugger;
+// }());
 
 console.log('main.js ready');
