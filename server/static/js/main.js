@@ -18,10 +18,18 @@
         function render() {
             var div = document.createElement('div'),
                 p = document.createElement('p'),
-                text = document.createTextNode(name);
-            // var svg = document.getElementById('svg1'); 
-            div.appendChild(p.appendChild(text));
+                text = document.createTextNode(name),
+                object = document.createElement('object');
+            // div.setAttribute('style', 'display: inline; float: left'); 
+            div.setAttribute('class', 'statusPanel');
             div.setAttribute('id', 'statusPanel'+id);
+            object.setAttribute('id', 'svg');
+            object.setAttribute('type', 'image/svg+xml');
+            object.setAttribute('data', 'static/img/lights.svg');
+            div.appendChild(object);
+            p.appendChild(text)
+            div.appendChild(p);
+            // div.appendChild(p.appendChild(text)); // doesn't work
             $(parent).append(div);
         }
 

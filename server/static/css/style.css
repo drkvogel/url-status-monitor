@@ -1,5 +1,5 @@
 
-/* from Flask docs */
+/* general styling, from Flask docs */
 
 html { font-family: sans-serif; background: #eee; padding: 1rem; }
 body { max-width: 960px; margin: 0 auto; background: white; }
@@ -27,3 +27,13 @@ nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
 .content textarea { min-height: 12em; resize: vertical; }
 input.danger { color: #cc2f2e; }
 input[type=submit] { align-self: start; min-width: 10em; }
+
+/* status panels */
+div.statusPanel {
+    display: inline; 
+    float: left;    /* ? [css] Property is ignored due to the display. With 'display: inline', the width, height, margin-top, margin-bottom, and float properties have no effect. [propertyIgnoredDueToDisplay]
+    Specifies how a box should be floated. It may be set for any element, but only applies to elements that generate boxes that are not absolutely positioned. */
+    text-align: center;
+    padding: 20px;
+}
+/* <div style="display: inline; float: left" class="statusPanel"><div class="trafficLights" style="text-align: center;">' + */
