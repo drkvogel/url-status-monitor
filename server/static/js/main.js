@@ -15,22 +15,33 @@
         this.freq = freq; //?
         this.parent = parent;
 
-        function render() {
+        var redLight, grnLight;
+
+        this.render = function() {
             var div = document.createElement('div'),
                 p = document.createElement('p'),
                 text = document.createTextNode(name),
                 object = document.createElement('object');
-            // div.setAttribute('style', 'display: inline; float: left'); 
             div.setAttribute('class', 'statusPanel');
             div.setAttribute('id', 'statusPanel'+id);
-            object.setAttribute('id', 'svg');
+            object.setAttribute('id', 'svg'+id);
             object.setAttribute('type', 'image/svg+xml');
-            object.setAttribute('data', 'static/img/lights.svg');
+            object.setAttribute('data', '/static/img/lights.svg');
             div.appendChild(object);
             p.appendChild(text)
             div.appendChild(p);
-            // div.appendChild(p.appendChild(text)); // doesn't work
             $(parent).append(div);
+            // this.redLight = object.contentDocument.getElementById('redLight'); // doesn't seem to work at this point
+            // this.grnLight = object.contentDocument.getElementById('grnLight');
+        }
+        // var svg = document.getElementById('svg1');
+
+        this.dimRed = function() {
+            var svg = document.getElementById('svg'+this.id);
+            var redLight = svg.contentDocument.getElementById('redLight');
+            // this.redLight = object.contentDocument.getElementById('redLight'); // doesn't seem to work at this point
+            // this.grnLight = object.contentDocument.getElementById('grnLight');
+            $(redLight).css('fill', 'white');
         }
 
         function checkURL() {
@@ -50,14 +61,20 @@
 
         function onSuccess() { console.log("light id "+id+" onSuccess"); }
         function onComplete() { console.log("light id "+id+" checked url: " + url); }
-        function onError() { alert("onError"); }
+        function onError() { alert("onError: url: "+url); }
         
         console.log('StatusPanel(id = ' + id + ', name='+name+', url='+this.url+', freq='+freq+')');
-        render();
+        this.render();
+        // this.dimRed();
         setTimeout(checkURL, freq * 100);  // just once for testing
         // setInterval(checkURL, freq * 1000);
     }
 
+    // StatusPanel.prototype = {
+    //     dimRed: function() {
+    //         $(redLight).css('fill', 'white');
+    //     }
+    // }
     
     function onClickInstantiate() {
         console.log('Instantiate button clicked');
@@ -66,16 +83,10 @@
     
     function onClickCreate() {
         console.log('Create button clicked');
-        // var div = document.createElement('div'),
-        // p = document.createElement('p'),
-        // text = document.createTextNode('stuff');
-        // div.appendChild(p.appendChild(text));
-        // div.setAttribute('id', 'statusPanel');
-        // $('#statusContainer').append(div);
         $('#statusContainer').append(html);
     }   
     
-    var svg = document.getElementById('svg1');
+    // var svg = document.getElementById('svg1');
 
     function onClickRedButton() {
         console.log('Red button clicked');
@@ -85,7 +96,7 @@
     
     function onClickGreenButton() {
         console.log('Green button clicked');
-        var greenLight = svg.contentDocument.getElementById('greenLight');
+        var greenLight = svg.contentDocument.getElementById('grnLight');
         $(greenLight).css('fill', 'white');
     }
 
@@ -94,15 +105,17 @@
     $('#createStatusPanel').on('click', onClickCreate);
     $('#instantiateStatusPanel').on('click', onClickInstantiate);
 
+    var panels = [];
+
     $().ready(function () { //$(document).ready(
-        console.log('Document ready');
+        // console.log('Document ready');
         var containerDiv = '#statusContainer';
         $.getJSON("/getconfig?id=1", function(data) {
-            // console.log('got data: ' + data);
             $.each(data, function(i, light) {
-                var panel = new StatusPanel(light.id, light.name, light.url, light.freq, containerDiv);
+                panels[i] = new StatusPanel(light.id, light.name, light.url, light.freq, containerDiv);
             })
         })
+        panels[0].dimRed(); // doesn't work here but works in console after...
         // var LOCAL = false;
         // var loc = location.toString().split('://')[1]; // strip off http://, https://
         // if (loc.substr(0, 9) === 'localhost') { // served locally
@@ -110,17 +123,18 @@
         // }
         // console.log('LOCAL: ' + LOCAL);
     });
-
+    
     // debugger;
-// }());
-
-console.log('main.js ready');
-
-// cruft
-
-                // console.log('object: ' + i);
-                // var freq = object.freq, url = object.url;
-                // console.log('freq: ' + freq + ', url: '+ url);
-               // $.each(object, function(j, value) {
-                //     console.log(j + '=' + value);
+    // }());
+    
+    console.log('main.js ready');
+    
+    // cruft
+    
+    // console.log('got data: ' + data);
+    // console.log('object: ' + i);
+    // var freq = object.freq, url = object.url;
+    // console.log('freq: ' + freq + ', url: '+ url);
+    // $.each(object, function(j, value) {
+        //     console.log(j + '=' + value);
                 // })
