@@ -96,6 +96,12 @@ def url3():
 def url4():
     return 'url4'
 
+@app.route("/url5")
+def url5():
+    # return 'url5'
+    # pass # crashes flask
+    abort(404)
+
 if __name__ == '__main__':
     app.run(debug=True)
 

@@ -17,13 +17,14 @@
 
         function render() {
             var div = document.createElement('div'),
-            p = document.createElement('p'),
-            text = document.createTextNode(name);
+                p = document.createElement('p'),
+                text = document.createTextNode(name);
             // var svg = document.getElementById('svg1'); 
             div.appendChild(p.appendChild(text));
             div.setAttribute('id', 'statusPanel'+id);
             $(parent).append(div);
         }
+
         function checkURL() {
             console.log('checkUrl(): ' + url);
             $.ajax({
@@ -38,6 +39,7 @@
                 }
             });
         }
+
         function onSuccess() { console.log("light id "+id+" onSuccess"); }
         function onComplete() { console.log("light id "+id+" checked url: " + url); }
         function onError() { alert("onError"); }
@@ -48,27 +50,24 @@
         // setInterval(checkURL, freq * 1000);
     }
 
-    //var statusPanel1 = new StatusPanel(1, "Test", "http://localhost:8080/status");
-
-    var svg = document.getElementById('svg1');
-
+    
     function onClickInstantiate() {
         console.log('Instantiate button clicked');
         var panel = new StatusPanel(1, "Test", "http://localhost:8080/status", 10, '#statusContainer');
-        // // $('#statusContainer').append(div);
-        // $('#statusContainer').append(html);
     }   
-
+    
     function onClickCreate() {
         console.log('Create button clicked');
-        var div = document.createElement('div'),
-            p = document.createElement('p'),
-            text = document.createTextNode('stuff');
-        div.appendChild(p.appendChild(text));
-        div.setAttribute('id', 'statusPanel');
+        // var div = document.createElement('div'),
+        // p = document.createElement('p'),
+        // text = document.createTextNode('stuff');
+        // div.appendChild(p.appendChild(text));
+        // div.setAttribute('id', 'statusPanel');
         // $('#statusContainer').append(div);
         $('#statusContainer').append(html);
     }   
+    
+    var svg = document.getElementById('svg1');
 
     function onClickRedButton() {
         console.log('Red button clicked');
@@ -93,13 +92,7 @@
         $.getJSON("/getconfig?id=1", function(data) {
             // console.log('got data: ' + data);
             $.each(data, function(i, light) {
-                // console.log('object: ' + i);
-                // var freq = object.freq, url = object.url;
-                // console.log('freq: ' + freq + ', url: '+ url);
                 var panel = new StatusPanel(light.id, light.name, light.url, light.freq, containerDiv);
-                // $.each(object, function(j, value) {
-                //     console.log(j + '=' + value);
-                // })
             })
         })
         // var LOCAL = false;
@@ -114,3 +107,12 @@
 // }());
 
 console.log('main.js ready');
+
+// cruft
+
+                // console.log('object: ' + i);
+                // var freq = object.freq, url = object.url;
+                // console.log('freq: ' + freq + ', url: '+ url);
+               // $.each(object, function(j, value) {
+                //     console.log(j + '=' + value);
+                // })
