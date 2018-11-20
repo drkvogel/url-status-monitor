@@ -8,29 +8,32 @@
 
     var statusTimeout = 1000; // xxx
 
-    function StatusPanel(id, name, url, freq) {
+    function StatusPanel(id, name, url, freq, parent) {
         this.id = id;
         this.name = name;
         this.url = url;
-        console.log('StatusPanel(id = ' + id + ', name='+name+', url='+this.url+', freq='+freq+')');
+        this.freq = freq; //?
+        this.parent = parent;
+
         function render() {
             var div = document.createElement('div'),
             p = document.createElement('p'),
             text = document.createTextNode(name);
+            // var svg = document.getElementById('svg1'); 
             div.appendChild(p.appendChild(text));
             div.setAttribute('id', 'statusPanel'+id);
-            $('#statusContainer').append(div);
+            $(parent).append(div);
         }
         function checkURL() {
             console.log('checkUrl(): ' + url);
             $.ajax({
-                url: this.url,
+                url: url,
                 complete: onComplete,
                 success: onSuccess,
                 error: onError,
                 statusCode: {
                     404: function() {
-                      alert( "page not found" );
+                        alert( "page not found" );
                     }
                 }
             });
@@ -38,7 +41,8 @@
         function onSuccess() { console.log("light id "+id+" onSuccess"); }
         function onComplete() { console.log("light id "+id+" checked url: " + url); }
         function onError() { alert("onError"); }
-
+        
+        console.log('StatusPanel(id = ' + id + ', name='+name+', url='+this.url+', freq='+freq+')');
         render();
         setTimeout(checkURL, freq * 100);  // just once for testing
         // setInterval(checkURL, freq * 1000);
@@ -50,7 +54,7 @@
 
     function onClickInstantiate() {
         console.log('Instantiate button clicked');
-        var panel = new StatusPanel(1, "Test", "http://localhost:8080/status", 10);
+        var panel = new StatusPanel(1, "Test", "http://localhost:8080/status", 10, '#statusContainer');
         // // $('#statusContainer').append(div);
         // $('#statusContainer').append(html);
     }   
@@ -85,13 +89,14 @@
 
     $().ready(function () { //$(document).ready(
         console.log('Document ready');
+        var containerDiv = '#statusContainer';
         $.getJSON("/getconfig?id=1", function(data) {
-            console.log('got data: ' + data);
+            // console.log('got data: ' + data);
             $.each(data, function(i, light) {
-                console.log('object: ' + i);
+                // console.log('object: ' + i);
                 // var freq = object.freq, url = object.url;
                 // console.log('freq: ' + freq + ', url: '+ url);
-                var panel = new StatusPanel(light.id, light.name, light.url, light.freq);
+                var panel = new StatusPanel(light.id, light.name, light.url, light.freq, containerDiv);
                 // $.each(object, function(j, value) {
                 //     console.log(j + '=' + value);
                 // })
