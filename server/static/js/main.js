@@ -1,8 +1,6 @@
 
-// (function () {
+// (function () { // TODO IIFE?
     'use strict';
-
-
 
     function StatusPanel(id, name, url, freq, parent) {
         this.id = id;
@@ -17,8 +15,10 @@
 
         this.render = function() {
             var div = document.createElement('div'),
-                p = document.createElement('p'),
-                text = document.createTextNode(name),
+                p1 = document.createElement('p'),
+                text1 = document.createTextNode(name),
+                p2 = document.createElement('p'),
+                text2 = document.createTextNode(url),
                 object = document.createElement('object');
             div.setAttribute('class', 'statusPanel');
             div.setAttribute('id', 'statusPanel'+id);
@@ -26,8 +26,10 @@
             object.setAttribute('type', 'image/svg+xml');
             object.setAttribute('data', '/static/img/lights.svg');
             div.appendChild(object);
-            p.appendChild(text)
-            div.appendChild(p);
+            p1.appendChild(text1)
+            div.appendChild(p1);
+            p2.appendChild(text2)
+            div.appendChild(p2);
             $(parent).append(div);
             // this.redLight = object.contentDocument.getElementById('redLight'); // doesn't seem to work at this point
             // this.grnLight = object.contentDocument.getElementById('grnLight');
@@ -54,19 +56,19 @@
             this.redOn = true;
         }
         
-        var that = this;
+        var self = this;
         
         this.onRedFlash = function() {
-            if (that.redOn) {
-                that.dimRed();
+            if (self.redOn) {
+                self.dimRed();
             } else {
-                that.litRed();
+                self.litRed();
             }
         }
 
         this.stopFlash = function() {
-            clearInterval(that.flashInterval);
-            that.flashInterval = undefined;
+            clearInterval(self.flashInterval);
+            self.flashInterval = undefined;
         }
 
         this.flashRed = function() {
@@ -133,8 +135,8 @@
             $.each(data, function(i, light) {
                 panels[i] = new StatusPanel(light.id, light.name, light.url, light.freq, containerDiv);
             })
+            panels[0].flashRed(); // works sync here and works in console after
         })
-        // panels[0].dimRed(); // doesn't work here but works in console after...
         // var LOCAL = false;
         // var loc = location.toString().split('://')[1]; // strip off http://, https://
         // if (loc.substr(0, 9) === 'localhost') { // served locally
