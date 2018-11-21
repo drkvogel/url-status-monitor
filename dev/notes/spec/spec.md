@@ -19,6 +19,6 @@ In the backend, use any suitable language to create two endpoints:
 
 2. A server or script that generates a web page containing multiple ‘traffic lights’ according to a choice of configurations stored in MySQL or SQLite table(s), and a query string parameter that selects a particular configuration of traffic lights to display.
 
-* For a particular query string parameter, the selected configuration specifiesthe traffic lights displayed on the returned web page
+* For a particular query string parameter, the selected configuration specifies the traffic lights displayed on the returned web page
 * A configuration can specify one or more predefined ‘traffic lights’ to be displayed, while a predefined ‘traffic light’ may be referenced in multiple configurations
 * A ‘traffic light’ is defined by the URL to be monitored and the frequency with which it should be checked. Please provide table definition SQL for your solution
