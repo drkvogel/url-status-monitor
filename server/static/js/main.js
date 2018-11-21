@@ -113,19 +113,6 @@
         // setInterval(checkURL, freq * 1000);
     }
 
-    // StatusPanel.prototype = {
-    //     dimRed: function() {
-    //         $(redLight).css('fill', 'white');
-    //     }
-    // }
-    
-    function onClickInstantiate() {
-        console.log('Instantiate button clicked');
-        var panel = new StatusPanel(1, "Test", "http://localhost:8080/status", 10, '#statusContainer');
-    }
-
-    $('#instantiateStatusPanel').on('click', onClickInstantiate);
-
     var panels = [];
 
     $().ready(function () { //$(document).ready(
@@ -185,3 +172,16 @@
     // var html = '<div style="display: inline; float: left" class="statusPanel"><div class="trafficLights" style="text-align: center;">' +
     //     '<object id="svg1" type="image/svg+xml" data="img/lights.svg">Your browser doesn\'t support objects.</object>' +
     //     '</div></div>';f
+
+    // StatusPanel.prototype = {
+    //     dimRed: function() {
+    //         $(redLight).css('fill', 'white');
+    //     }
+    // }
+    
+    // function onClickInstantiate() {
+    //     console.log('Instantiate button clicked');
+    //     var panel = new StatusPanel(1, "Test", "http://localhost:8080/status", 10, '#statusContainer');
+    // }
+
+    // $('#instantiateStatusPanel').on('click', onClickInstantiate);
