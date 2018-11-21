@@ -1,5 +1,6 @@
 
 from flask import Flask, render_template, g, request, jsonify, abort
+from datetime import timedelta, datetime
 import sqlite3
 
 app = Flask(__name__, template_folder='templates', static_folder='static') # set templates folder here
@@ -86,7 +87,7 @@ def url1():
 
 @app.route("/url2")
 def url2():
-    return 'url2'
+    return str(datetime.now())
 
 @app.route("/url3")
 def url3():
