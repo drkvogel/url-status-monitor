@@ -2,9 +2,7 @@
 // (function () {
     'use strict';
 
-    // var html = '<div style="display: inline; float: left" class="statusPanel"><div class="trafficLights" style="text-align: center;">' +
-    //     '<object id="svg1" type="image/svg+xml" data="img/lights.svg">Your browser doesn\'t support objects.</object>' +
-    //     '</div></div>';f
+
 
     function StatusPanel(id, name, url, freq, parent) {
         this.id = id;
@@ -13,7 +11,7 @@
         this.freq = freq; //?
         this.parent = parent;
 
-        var redLight, grnLight;
+        // var redLight, grnLight;
 
         this.render = function() {
             var div = document.createElement('div'),
@@ -32,7 +30,6 @@
             // this.redLight = object.contentDocument.getElementById('redLight'); // doesn't seem to work at this point
             // this.grnLight = object.contentDocument.getElementById('grnLight');
         }
-        // var svg = document.getElementById('svg1');
 
         function getSVG() {
             return document.getElementById('svg'+id);
@@ -42,39 +39,20 @@
             return getSVG().contentDocument.getElementById(id);
         }
 
-        // function getGrnLight() {
-        //     return getSVG().contentDocument.getElementById('redLight');
-        // }
-
         this.dimRed = function() {
-            var svg = document.getElementById('svg'+this.id);
-            var redLight = svg.contentDocument.getElementById('redLight');
-            $(redLight).css('fill', 'darkred');
+            $(getSVGElement('redLight')).css('fill', 'darkred');
         }
-
-        // this.litRed = function() {
-        //     var svg = document.getElementById('svg'+this.id);
-        //     var redLight = svg.contentDocument.getElementById('redLight');
-        //     $(redLight).css('fill', 'red');
-        // }
   
         this.litRed = function() {
-            // var svg = document.getElementById('svg'+this.id);
-            // var redLight = svg.contentDocument.getElementById('redLight');
-            // $(getRedLight()).css('fill', 'red');
             $(getSVGElement('redLight')).css('fill', 'red');
         }
       
         this.dimGrn = function() {
-            var svg = document.getElementById('svg'+this.id);
-            var redLight = svg.contentDocument.getElementById('grnLight');
-            $(redLight).css('fill', 'darkgreen');
+            $(getSVGElement('grnLight')).css('fill', 'darkgreen');
         }
 
         this.litGrn = function() {
-            var svg = document.getElementById('svg'+this.id);
-            var redLight = svg.contentDocument.getElementById('grnLight');
-            $(redLight).css('fill', 'green');
+            $(getSVGElement('grnLight')).css('fill', 'green');
         }
     
         function checkURL() {
@@ -92,9 +70,9 @@
             });
         }
 
-        function onSuccess() { console.log("light id "+id+" onSuccess"); }
-        function onComplete() { console.log("light id "+id+" checked url: " + url); }
-        function onError() { alert("onError: url: "+url); }
+        function onSuccess()    { console.log("light id "+id+" onSuccess"); }
+        function onComplete()   { console.log("light id "+id+" checked url: " + url); }
+        function onError()      { alert("onError: url: "+url); }
         
         console.log('StatusPanel(id = ' + id + ', name='+name+', url='+this.url+', freq='+freq+')');
         this.render();
@@ -114,26 +92,7 @@
         var panel = new StatusPanel(1, "Test", "http://localhost:8080/status", 10, '#statusContainer');
     }   
     
-    // function onClickCreate() {
-    //     console.log('Create button clicked');
-    //     $('#statusContainer').append(html);
-    // }   
 
-    // function onClickRedButton() {
-    //     console.log('Red button clicked');
-    //     var redLight = svg.contentDocument.getElementById('redLight');
-    //     $(redLight).css('fill', 'white');
-    // }
-    
-    // function onClickGreenButton() {
-    //     console.log('Green button clicked');
-    //     var greenLight = svg.contentDocument.getElementById('grnLight');
-    //     $(greenLight).css('fill', 'white');
-    // }
-
-    // $('#redButton').on('click', onClickRedButton);
-    // $('#greenButton').on('click', onClickGreenButton);
-    // $('#createStatusPanel').on('click', onClickCreate);
     $('#instantiateStatusPanel').on('click', onClickInstantiate);
 
     var panels = [];
@@ -170,3 +129,28 @@
     // $.each(object, function(j, value) {
         //     console.log(j + '=' + value);
                 // })
+
+    // function onClickCreate() {
+    //     console.log('Create button clicked');
+    //     $('#statusContainer').append(html);
+    // }   
+
+    // function onClickRedButton() {
+    //     console.log('Red button clicked');
+    //     var redLight = svg.contentDocument.getElementById('redLight');
+    //     $(redLight).css('fill', 'white');
+    // }
+    
+    // function onClickGreenButton() {
+    //     console.log('Green button clicked');
+    //     var greenLight = svg.contentDocument.getElementById('grnLight');
+    //     $(greenLight).css('fill', 'white');
+    // }
+
+    // $('#redButton').on('click', onClickRedButton);
+    // $('#greenButton').on('click', onClickGreenButton);
+    // $('#createStatusPanel').on('click', onClickCreate);
+
+    // var html = '<div style="display: inline; float: left" class="statusPanel"><div class="trafficLights" style="text-align: center;">' +
+    //     '<object id="svg1" type="image/svg+xml" data="img/lights.svg">Your browser doesn\'t support objects.</object>' +
+    //     '</div></div>';f
