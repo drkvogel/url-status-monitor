@@ -10,6 +10,8 @@
         this.url = url;
         this.freq = freq; //?
         this.parent = parent;
+        this.redOn = false;
+        this.flashPeriod = 500;
 
         // var redLight, grnLight;
 
@@ -32,21 +34,49 @@
         }
 
         function getSVG() {
+            // TODO could cache...
             return document.getElementById('svg'+id);
         }
 
         function getSVGElement(id) {
+            // TODO could cache...
             return getSVG().contentDocument.getElementById(id);
         }
 
         this.dimRed = function() {
+            // clearInterval(that.flashInterval);
             $(getSVGElement('redLight')).css('fill', 'darkred');
+            this.redOn = false;
         }
-  
+        
         this.litRed = function() {
             $(getSVGElement('redLight')).css('fill', 'red');
+            this.redOn = true;
         }
-      
+        
+        var that = this;
+        
+        this.onRedFlash = function() {
+            if (that.redOn) {
+                that.dimRed();
+            } else {
+                that.litRed();
+            }
+        }
+
+        this.stopFlash = function() {
+            clearInterval(that.flashInterval);
+            that.flashInterval = undefined;
+        }
+
+        this.flashRed = function() {
+            // console.log($(getSVGElement('redLight')).css('fill'));
+            console.log('redOn: '+this.redOn);
+            if (this.flashInterval === undefined) { // prevent layered flashes
+                this.flashInterval = setInterval(this.onRedFlash, this.flashPeriod);
+            }
+        }
+    
         this.dimGrn = function() {
             $(getSVGElement('grnLight')).css('fill', 'darkgreen');
         }
@@ -77,7 +107,7 @@
         console.log('StatusPanel(id = ' + id + ', name='+name+', url='+this.url+', freq='+freq+')');
         this.render();
         // this.dimRed();
-        setTimeout(checkURL, freq * 100);  // just once for testing
+        // setTimeout(checkURL, freq * 100);  // just once for testing
         // setInterval(checkURL, freq * 1000);
     }
 
@@ -90,8 +120,7 @@
     function onClickInstantiate() {
         console.log('Instantiate button clicked');
         var panel = new StatusPanel(1, "Test", "http://localhost:8080/status", 10, '#statusContainer');
-    }   
-    
+    }
 
     $('#instantiateStatusPanel').on('click', onClickInstantiate);
 
