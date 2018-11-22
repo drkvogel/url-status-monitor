@@ -65,7 +65,6 @@ def show_config():
     if lights == []:
         msg = 'Error: no lights found for config_id: ' + str(config_id)
     else:
-        #msg =  "<p>Config: id: %s, name: %s</p>\n" % (config["id"], config["name"])
         msg =  "<p>Config: id: %s\n" % (config_id)
     table = '<table><tr><th>id</th><th>name</th><th>url</th><tr>'
     for light in lights:
@@ -74,11 +73,16 @@ def show_config():
     return render_template('config.html', msg=msg, config_id=config_id, lights=table)
 
 
+@app.route("/dashboard")
+def dashboard():
+    data_id = request.args.get('id')
+    return render_template("dashboard.html", data_id=data_id)
+
 @app.route("/status")
 def status():
-    # data_id = 'test'
-    data_id = 3
-    return render_template("status.html", data_id=data_id)
+    code = request.args.get('code')
+    abort(code)
+    # abort(Response('Hello World'))
 
 @app.route("/url1")
 def url1():
