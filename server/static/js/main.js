@@ -118,12 +118,17 @@
     $().ready(function () { //$(document).ready(
         // console.log('Document ready');
         var containerDiv = '#statusContainer';
-        $.getJSON("/getconfig?id=1", function(data) {
+        console.log('$(containerDiv).attr(\'data-id\'): ' + $(containerDiv).attr('data-id'));
+        var url = "/getconfig?id=" + $(containerDiv).attr('data-id');
+        $.getJSON(url, function(data) {
             $.each(data, function(i, light) {
                 panels[i] = new StatusPanel(light.id, light.name, light.url, light.freq, containerDiv);
             })
-            panels[0].flashRed(); // works sync here and works in console after
-        })
+            // panels[0].flashRed(); // works sync here and works in console after
+        }).fail(function (jqxhr, textStatus, errorThrown) { // doesn't work?
+            var err = 'error getting json: ' + textStatus + ', errorThrown: ' + errorThrown;
+            console.log(err);
+        });
         // var LOCAL = false;
         // var loc = location.toString().split('://')[1]; // strip off http://, https://
         // if (loc.substr(0, 9) === 'localhost') { // served locally

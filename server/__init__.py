@@ -76,7 +76,9 @@ def show_config():
 
 @app.route("/status")
 def status():
-    return render_template("status.html")
+    # data_id = 'test'
+    data_id = 3
+    return render_template("status.html", data_id=data_id)
 
 @app.route("/url1")
 def url1():
