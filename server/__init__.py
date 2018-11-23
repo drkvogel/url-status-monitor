@@ -29,10 +29,6 @@ def close_connection(e):
 def index():
     return render_template('index.html')
 
-@app.route("/test")
-def test():
-    return render_template('test.html')
-
 def get_lights(config_id):
     query = (
         "SELECT c.id AS config_id, c.name AS config_name,"
@@ -80,34 +76,29 @@ def dashboard():
 
 @app.route("/status")
 def status():
-    code = request.args.get('code')
-    abort(code)
-    # abort(Response('Hello World'))
+    arg = request.args.get('code')
 
-@app.route("/url1")
-def url1():
-    # return 'url1'
-    # pass
-    abort(403)
-    # abort(Response('Hello World'))
+    if arg == None:
+        return render_template("status-none.html")
 
-@app.route("/url2")
-def url2():
-    return str(datetime.now())
+    code = int(arg)
 
-@app.route("/url3")
-def url3():
-    return 'url3'
+    if code == 200:
+        return render_template("status-200.html")
 
-@app.route("/url4")
-def url4():
-    return 'url4'
+    try:
+        abort(code) # abort() will raise an error but we don't want to catch it unless it's a LookupError
+    except LookupError:
+        return "status %s not recognised" % code
 
-@app.route("/url5")
-def url5():
-    # return 'url5'
+@app.route("/test")
+def test():
+    # return 'test'
     # pass # crashes flask
-    abort(404)
+    # abort(403)
+    # abort(Response('Hello World'))
+    # return str(datetime.now())
+    return render_template('test.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
