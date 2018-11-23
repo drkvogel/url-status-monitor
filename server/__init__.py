@@ -75,23 +75,44 @@ def dashboard():
     data_id = request.args.get('id')
     return render_template("dashboard.html", data_id=data_id)
 
-@app.route("/status")
+@app.route('/status')
 def status():
-    arg = request.args.get('code')
+    arg = request.args.get('pattern')
 
-    if arg == None:
-        return render_template("status-none.html")
+    if arg == None or arg == '':                                # status code or nothing requested
+        arg = request.args.get('code')
 
-    code = int(arg)
+        if arg == None or arg == '':                            # show some links for testing
+            return render_template('status-none.html')
 
-    if code == 200:
-        return render_template("status-200.html")
-
-    try:
-        abort(code)             # abort() will raise an error but we don't want to catch it unless it's a LookupError
-    except LookupError:         # many status codes are not recognised by Flask: http://werkzeug.pocoo.org/docs/0.14/exceptions/#error-classes
-        # return "status %s not recognised" % code	# but this returns a 200       
-        abort(exceptions.BadRequest('status %s not handled' % code))
+        try:                                                    # return status code
+            code = int(arg)
+            if code == 200:                                     # 200 OK
+                return render_template('status-200.html')
+            else:                                               # error code
+                abort(code)         
+                # abort() will raise an error but we don't want to catch it unless it's a LookupError
+        except LookupError:         
+            abort(exceptions.BadRequest('status %s not handled' % code))    # return non-200
+            # many status codes are not recognised by Flask: http://werkzeug.pocoo.org/docs/0.14/exceptions/#error-classes
+        except:                     
+            abort(exceptions.BadRequest('argument %s not understood' % arg))
+            # e.g. ValueError - couldn't convert to int
+    
+    else:                                               # pattern requested
+        try:
+            pattern = int(arg)
+            if pattern == 1:
+                return "pattern 1"
+            elif pattern == 2:
+                return "pattern 2"
+            elif pattern == 3:
+                return "pattern 3"
+            else:
+                abort(exceptions.BadRequest('unknown pattern: %s' % pattern))
+                # return 'unknown pattern: %s' % pattern
+        except ValueError:                     
+            abort(exceptions.BadRequest('argument %s not understood' % arg))
 
 @app.route("/test")
 def test():
