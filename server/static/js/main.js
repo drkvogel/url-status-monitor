@@ -9,7 +9,7 @@
         this.freq = freq; //?
         this.parent = parent;
         this.redOn = false;
-        this.flashPeriod = 500;
+        this.flashPeriod = 300;
 
         // var redLight, grnLight;
 
@@ -46,7 +46,6 @@
         }
 
         this.dimRed = function() {
-            // clearInterval(that.flashInterval);
             $(getSVGElement('redLight')).css('fill', 'darkred');
             this.redOn = false;
         }
@@ -72,8 +71,6 @@
         }
 
         this.flashRed = function() {
-            // console.log($(getSVGElement('redLight')).css('fill'));
-            console.log('redOn: '+this.redOn);
             if (this.flashInterval === undefined) { // prevent layered flashes
                 this.flashInterval = setInterval(this.onRedFlash, this.flashPeriod);
             }
@@ -84,19 +81,22 @@
         }
 
         this.litGrn = function() {
-            $(getSVGElement('grnLight')).css('fill', 'green');
+            $(getSVGElement('grnLight')).css('fill', 'lightgreen');
         }
     
         function checkURL() {
-            console.log('checkUrl(): ' + url);
+            console.log(this.name + ': checkUrl(): ' + url);
             $.ajax({
                 url: url,
                 complete: onComplete,
                 success: onSuccess,
                 error: onError,
                 statusCode: {
+                    200: function() {
+                        self.litGrn();
+                    },
                     404: function() {
-                        alert( "page not found" );
+                        self.flashRed();
                     }
                 }
             });
@@ -104,47 +104,46 @@
 
         function onSuccess()    { console.log("light id "+id+" onSuccess"); }
         function onComplete()   { console.log("light id "+id+" checked url: " + url); }
-        function onError()      { alert("onError: url: "+url); }
+        function onError()      { console.log("light id "+id+" onError: url: "+url); }
         
         console.log('StatusPanel(id = ' + id + ', name='+name+', url='+this.url+', freq='+freq+')');
         this.render();
-        // this.dimRed();
-        // setTimeout(checkURL, freq * 100);  // just once for testing
+        setTimeout(checkURL, freq * 100);  // just once for testing
         // setInterval(checkURL, freq * 1000);
     }
 
     var panels = [];
 
-    $().ready(function () { //$(document).ready(
-        // console.log('Document ready');
+    $().ready(function () { 
         var containerDiv = '#statusContainer';
-        console.log('$(containerDiv).attr(\'data-id\'): ' + $(containerDiv).attr('data-id'));
         var url = "/getconfig?id=" + $(containerDiv).attr('data-id');
         $.getJSON(url, function(data) {
             $.each(data, function(i, light) {
                 panels[i] = new StatusPanel(light.id, light.name, light.url, light.freq, containerDiv);
             })
-            // panels[0].flashRed(); // works sync here and works in console after
         }).fail(function (jqxhr, textStatus, errorThrown) { // doesn't work?
             var err = 'error getting json: ' + textStatus + ', errorThrown: ' + errorThrown;
             console.log(err);
         });
-        // var LOCAL = false;
-        // var loc = location.toString().split('://')[1]; // strip off http://, https://
-        // if (loc.substr(0, 9) === 'localhost') { // served locally
-        //     LOCAL = true;
-        // }
-        // console.log('LOCAL: ' + LOCAL);
     });
+
+// debugger;
+// }());
+
+console.log('main.js ready');
+
+// cruft
+
+    // console.log('$(containerDiv).attr(\'data-id\'): ' + $(containerDiv).attr('data-id'));
     
-    // debugger;
-    // }());
-    
-    console.log('main.js ready');
-    
-    // cruft
-    
-        // var svg = document.getElementById('svg1');
+    // var LOCAL = false;
+    // var loc = location.toString().split('://')[1]; // strip off http://, https://
+    // if (loc.substr(0, 9) === 'localhost') { // served locally
+    //     LOCAL = true;
+    // }
+    // console.log('LOCAL: ' + LOCAL);
+
+    // var svg = document.getElementById('svg1');
     // console.log('got data: ' + data);
     // console.log('object: ' + i);
     // var freq = object.freq, url = object.url;
@@ -190,3 +189,6 @@
     // }
 
     // $('#instantiateStatusPanel').on('click', onClickInstantiate);
+
+    //$(document).ready(
+        // console.log('Document ready');
