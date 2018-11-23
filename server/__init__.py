@@ -65,7 +65,7 @@ def show_config():
         msg = '<p>Config: id: %s\n' % (config_id)
     table = '<table><tr><th>id</th><th>name</th><th>url</th><tr>'
     for light in lights:
-        table += '<tr><td>%s</td><td>%s</td><td>%s</td></tr>'ß % (light['light_id'], light['light_name'], light['light_url'])
+        table += '<tr><td>%s</td><td>%s</td><td>%s</td></tr>' % (light['light_id'], light['light_name'], light['light_url'])
     table += '</table>\n'
     return render_template('config.html', msg=msg, config_id=config_id, lights=table)
 
