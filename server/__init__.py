@@ -1,5 +1,6 @@
 
 from flask import Flask, render_template, g, request, jsonify, abort
+from werkzeug import exceptions
 from datetime import timedelta, datetime
 import sqlite3
 
@@ -40,7 +41,7 @@ def get_lights(config_id):
     lights = query_db(query, [config_id]) # returns list of Row objects
     return lights
 
-@app.route("/getconfig")
+@app.route('/getconfig')
 def get_config():
     config_id = request.args.get('id')
     lights = get_lights(config_id)
@@ -54,17 +55,17 @@ def get_config():
         data.append(light)
     return jsonify(data)	
 
-@app.route("/showconfig")
+@app.route('/showconfig')
 def show_config():
     config_id = request.args.get('id')
     lights = get_lights(config_id)
     if lights == []:
         msg = 'Error: no lights found for config_id: ' + str(config_id)
     else:
-        msg =  "<p>Config: id: %s\n" % (config_id)
+        msg = '<p>Config: id: %s\n' % (config_id)
     table = '<table><tr><th>id</th><th>name</th><th>url</th><tr>'
     for light in lights:
-        table += "<tr><td>%s</td><td>%s</td><td>%s</td></tr>" % (light['light_id'], light['light_name'], light['light_url'])
+        table += '<tr><td>%s</td><td>%s</td><td>%s</td></tr>'ß % (light['light_id'], light['light_name'], light['light_url'])
     table += '</table>\n'
     return render_template('config.html', msg=msg, config_id=config_id, lights=table)
 
@@ -87,9 +88,10 @@ def status():
         return render_template("status-200.html")
 
     try:
-        abort(code) # abort() will raise an error but we don't want to catch it unless it's a LookupError
-    except LookupError:
-        return "status %s not recognised" % code
+        abort(code)             # abort() will raise an error but we don't want to catch it unless it's a LookupError
+    except LookupError:         # many status codes are not recognised by Flask: http://werkzeug.pocoo.org/docs/0.14/exceptions/#error-classes
+        # return "status %s not recognised" % code	# but this returns a 200       
+        abort(exceptions.BadRequest('status %s not handled' % code))
 
 @app.route("/test")
 def test():
