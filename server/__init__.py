@@ -100,14 +100,27 @@ def status():
             # e.g. ValueError - couldn't convert to int
     
     else:                                               # pattern requested
+        error_code = 503
         try:
             pattern = int(arg)
-            if pattern == 1:
-                return "pattern 1"
+            seconds = datetime.now().second	            # seconds past the current minute
+            minutes = datetime.now().minute             # minutes past the current hour
+            if pattern == 1:                            # be unavailable every other second
+                if seconds % 2 == 0:
+                    abort(error_code)
+                return "pattern 1: %ss" % str(datetime.now().second)
             elif pattern == 2:
-                return "pattern 2"
+                if minutes % 2 == 0 and seconds <= 10:
+                    abort(error_code)
+                return "pattern 2: down for 10 seconds per two minutes"
             elif pattern == 3:
-                return "pattern 3"
+                if minutes % 2 == 0 and seconds <= 20:
+                    abort(error_code)
+                return "pattern 3: down for 20 seconds per two minutes"
+            elif pattern == 4:
+                if minutes % 2 == 0 and seconds <= 35:
+                    abort(error_code)
+                return "pattern 3: down for 35 seconds per two minutes"
             else:
                 abort(exceptions.BadRequest('unknown pattern: %s' % pattern))
                 # return 'unknown pattern: %s' % pattern
