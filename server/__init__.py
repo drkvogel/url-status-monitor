@@ -59,27 +59,22 @@ def get_config(id):
     query = (
         'SELECT id, name, description FROM configs WHERE id = ?'
     )
-    config = query_db(query, [id])[0]
-    # config['id'] 
-    return config
+    return query_db(query, [id])[0]
 
 @app.route('/showconfig')
 def show_config():
     config_id = request.args.get('id')
-
-    config = get_config(config_id)
-
-    lights = get_lights(config_id)
-    if lights == []:
-        msg = 'Error: no lights found for config_id: ' + str(config_id)
-    else:
-        msg = '<p>Config: id: %s\n' % (config_id)
-    table = '<table><tr><th>id</th><th>name</th><th>url</th><tr>'
-    for light in lights:
-        table += '<tr><td>%s</td><td>%s</td><td>%s</td></tr>' % (light['light_id'], light['light_name'], light['light_url'])
-    table += '</table>\n'
-    # return render_template('config.html', msg=msg, config_id=config_id, lights=table)
-    return render_template('config.html', config_id=config_id, config_name=config['name'], config_desc=config['description'], lights=table)
+    try:
+        config = get_config(config_id)
+        lights = get_lights(config_id)
+        table = '<table><tr><th>id</th><th>name</th><th>url</th><tr>'
+        for light in lights:
+            table += '<tr><td>%s</td><td>%s</td><td>%s</td></tr>' % (light['light_id'], light['light_name'], light['light_url'])
+        table += '</table>\n'
+        return render_template('config.html', 
+            config_id=config_id, config_name=config['name'], config_desc=config['description'], lights=table)
+    except:
+        return "error getting config"
 
 
 @app.route('/dashboard')
