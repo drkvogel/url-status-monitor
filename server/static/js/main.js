@@ -10,6 +10,7 @@
         this.parent = parent;
         this.redOn = false;
         this.flashPeriod = 300;
+        var errors = [];
 
         var self = this;
 
@@ -99,19 +100,26 @@
             });
         }
 
-        function onSuccess()    { 
+        function onSuccess() {
             self.stopFlash();
             self.litGrn();
         }
 
-        function onError()      { 
+        function onError() { 
             self.dimGrn();
             self.flashRed();
+            var d = Date.now();
+            if (errors.length >= 3) {   // make sure there are no more than 3 errors stored
+                errors.splice(0, errors.length - 2); // just in case things get out of sync somehow?
+            }
+            errors.push(d);
+            console.log("light id "+id+" errors: " + JSON.stringify(errors));
         }
 
         function onComplete(jqXHR)   { // ajax call is finished, whether successful or not
             console.log("light id "+id+" onComplete, checked url: "+url+', status: '+jqXHR.status); //  jqXHR: '+JSON.stringify(jqXHR));
             $(self.statusDiv).text('Status: ' + jqXHR.status);
+
         }
         
         console.log('StatusPanel(id = '+id+', name='+name+', url='+this.url+', freq='+freq+')');
