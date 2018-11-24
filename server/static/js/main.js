@@ -11,6 +11,8 @@
         this.redOn = false;
         this.flashPeriod = 300;
 
+        var self = this;
+
         // var redLight, grnLight;
 
         this.render = function() {
@@ -21,6 +23,8 @@
                 text2 = document.createTextNode(url),
                 p3 = document.createElement('p'),
                 text3 = document.createTextNode('id: '+id),
+                statusPara = document.createElement('p'),
+                statusText = document.createTextNode('Status: Unknown'),
                 object = document.createElement('object');
             div.setAttribute('class', 'statusPanel');
             div.setAttribute('id', 'statusPanel'+id);
@@ -34,7 +38,10 @@
             div.appendChild(p2);
             p3.appendChild(text3);
             div.appendChild(p3);
-            $(parent).append(div);
+            this.statusDiv = statusPara;
+            statusPara.appendChild(statusText);
+            div.appendChild(statusPara);
+            this.div = $(parent).append(div);
             // this.redLight = object.contentDocument.getElementById('redLight'); // doesn't seem to work at this point
             // this.grnLight = object.contentDocument.getElementById('grnLight');
         }
@@ -58,8 +65,6 @@
             $(getSVGElement('redLight')).css('fill', 'red');
             this.redOn = true;
         }
-        
-        var self = this;
         
         this.onRedFlash = function() {
             if (self.redOn) {
@@ -117,16 +122,21 @@
             self.dimGrn();
             self.flashRed();
         }
-        function onComplete()   { // ajax call is finished, whether successful or not
-            console.log("light id "+id+" onComplete, checked url: " + url); 
+        function onComplete(jqXHR)   { // ajax call is finished, whether successful or not
+            console.log("light id "+id+" onComplete, checked url: " + url+', status: '+jqXHR.status); //  jqXHR: '+JSON.stringify(jqXHR));
+            // $(parent)
+            console.log('statusDiv: ' + JSON.stringify(self.statusDiv));
+            $(self.statusDiv).text('Status: ' + jqXHR.status);
+            
         }
         
         console.log('StatusPanel(id = ' + id + ', name='+name+', url='+this.url+', freq='+freq+')');
         this.render();
-        // setTimeout(checkURL, freq * 100);  // just once for testing
+        // console.log('div: ' + JSON.stringify(this.div)); 
+        setTimeout(checkURL, freq * 100);  // just once for testing
         var interval = freq * 1000;
         console.log(this.name + ': setInterval: ' + interval);
-        setInterval(checkURL, interval);
+        // setInterval(checkURL, interval);
     }
 
     var panels = [];
