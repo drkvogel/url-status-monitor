@@ -19,6 +19,8 @@
                 text1 = document.createTextNode(name),
                 p2 = document.createElement('p'),
                 text2 = document.createTextNode(url),
+                p3 = document.createElement('p'),
+                text3 = document.createTextNode('id: '+id),
                 object = document.createElement('object');
             div.setAttribute('class', 'statusPanel');
             div.setAttribute('id', 'statusPanel'+id);
@@ -30,6 +32,8 @@
             div.appendChild(p1);
             p2.appendChild(text2)
             div.appendChild(p2);
+            p3.appendChild(text3);
+            div.appendChild(p3);
             $(parent).append(div);
             // this.redLight = object.contentDocument.getElementById('redLight'); // doesn't seem to work at this point
             // this.grnLight = object.contentDocument.getElementById('grnLight');
@@ -68,6 +72,7 @@
         this.stopFlash = function() {
             clearInterval(self.flashInterval);
             self.flashInterval = undefined;
+            self.dimRed();
         }
 
         this.flashRed = function() {
@@ -85,31 +90,43 @@
         }
     
         function checkURL() {
-            console.log(this.name + ': checkUrl(): ' + url);
+            console.log('light id ' + id + ': checkUrl(): ' + url);
             $.ajax({
                 url: url,
                 complete: onComplete,
                 success: onSuccess,
-                error: onError,
-                statusCode: {
-                    200: function() {
-                        self.litGrn();
-                    },
-                    404: function() {
-                        self.flashRed();
-                    }
-                }
+                error: onError
+                // statusCode: {
+                //     200: function() {
+                //         self.litGrn();
+                //     },
+                //     404: function() {
+                //         self.flashRed();
+                //     }
+                // }
             });
         }
 
-        function onSuccess()    { console.log("light id "+id+" onSuccess"); }
-        function onComplete()   { console.log("light id "+id+" checked url: " + url); }
-        function onError()      { console.log("light id "+id+" onError: url: "+url); }
+        function onSuccess()    { 
+            console.log("light id "+id+" onSuccess");
+            self.stopFlash();
+            self.litGrn();
+        }
+        function onError()      { 
+            console.log("light id "+id+" onError: url: "+url);
+            self.dimGrn();
+            self.flashRed();
+        }
+        function onComplete()   { // ajax call is finished, whether successful or not
+            console.log("light id "+id+" onComplete, checked url: " + url); 
+        }
         
         console.log('StatusPanel(id = ' + id + ', name='+name+', url='+this.url+', freq='+freq+')');
         this.render();
-        setTimeout(checkURL, freq * 100);  // just once for testing
-        // setInterval(checkURL, freq * 1000);
+        // setTimeout(checkURL, freq * 100);  // just once for testing
+        var interval = freq * 1000;
+        console.log(this.name + ': setInterval: ' + interval);
+        setInterval(checkURL, interval);
     }
 
     var panels = [];
@@ -119,6 +136,7 @@
         var url = "/getconfig?id=" + $(containerDiv).attr('data-id');
         $.getJSON(url, function(data) {
             $.each(data, function(i, light) {
+                if (light.freq < 5) light.freq = 5; // guard against rapid checking if freq not set in db
                 panels[i] = new StatusPanel(light.id, light.name, light.url, light.freq, containerDiv);
             })
         }).fail(function (jqxhr, textStatus, errorThrown) { // doesn't work?
