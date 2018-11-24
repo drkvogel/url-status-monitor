@@ -28,7 +28,13 @@ def close_connection(e):
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    configs = get_configs()
+    table = '<table><tr><th>Name</th><th>Description</th><th>JSON</th><th></th><tr>\n'
+    for config in configs:
+        table += '<tr><td><a href="/dashboard?id=%s">%s</a></td><td>%s</td><td><a href="/getconfig?id=%s">JSON</a></td><td><a href="/showconfig?id=%s">Details</a></td></tr>\n' \
+                    % (config['id'], config['name'], config['description'], config['id'], config['id'])
+    table += '</table>\n'
+    return render_template('index.html', configs=table)
 
 def get_lights(config_id):
     query = (
@@ -62,6 +68,12 @@ def get_config(id):
         'SELECT id, name, description FROM configs WHERE id = ?'
     )
     return query_db(query, [id])[0]
+
+def get_configs():
+    query = (
+        'SELECT id, name, description FROM configs'
+    )
+    return query_db(query, [])
 
 @app.route('/showconfig')
 def show_config():
