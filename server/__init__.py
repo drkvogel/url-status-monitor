@@ -33,7 +33,8 @@ def index():
 def get_lights(config_id):
     query = (
         'SELECT c.id AS config_id, c.name AS config_name,'
-        ' l.id AS light_id, l.name AS light_name, l.url AS light_url, l.freq AS light_freq'
+        ' l.id AS light_id, l.name AS light_name, l.url AS light_url, l.freq AS light_freq,'
+        ' l.description AS light_desc'
         ' FROM configs c, configs_lights cl, lights l'
         ' WHERE c.id = cl.id_config AND l.id = cl.id_light'
 		' AND c.id = ?'
@@ -52,6 +53,7 @@ def get_config_route():
         light['name']   = row['light_name']
         light['url']    = row['light_url']
         light['freq']   = row['light_freq']
+        # light['desc']   = row['light_desc']
         data.append(light)
     return jsonify(data)	
 
@@ -67,9 +69,10 @@ def show_config():
     try:
         config = get_config(config_id)
         lights = get_lights(config_id)
-        table = '<table><tr><th>id</th><th>name</th><th>url</th><tr>'
+        table = '<table><tr><th>id</th><th>name</th><th>url</th><th>description</th><tr>'
         for light in lights:
-            table += '<tr><td>%s</td><td>%s</td><td>%s</td></tr>' % (light['light_id'], light['light_name'], light['light_url'])
+            table += '<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>' \
+                     % (light['light_id'], light['light_name'], light['light_url'], light['light_desc'])
         table += '</table>\n'
         return render_template('config.html', 
             config_id=config_id, config_name=config['name'], config_desc=config['description'], lights=table)
