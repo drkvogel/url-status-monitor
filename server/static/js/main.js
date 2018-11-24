@@ -101,19 +101,30 @@
         }
 
         function onSuccess() {
-            self.stopFlash();
-            self.litGrn();
+            var twoMinutesAgo = Date.now() - 120000; // 120000ms = 2 minutes
+            // console.log('twoMinutesAgo: ' + twoMinutesAgo);
+            if (errors.length === 0 || errors[0] < twoMinutesAgo) {
+                self.stopFlash();
+                self.litGrn();
+            }
         }
 
         function onError() { 
-            self.dimGrn();
-            self.flashRed();
             var d = Date.now();
-            if (errors.length >= 3) {   // make sure there are no more than 3 errors stored
+            if (errors.length >= 3) {           // make sure there are no more than 3 errors stored
                 errors.splice(0, errors.length - 2); // just in case things get out of sync somehow?
             }
             errors.push(d);
             console.log("light id "+id+" errors: " + JSON.stringify(errors));
+            var twoMinutesAgo = Date.now() - 120000;
+            // console.log('twoMinutesAgo: ' + twoMinutesAgo);
+            if (errors.length >= 3 && errors[0] >= twoMinutesAgo) {   // at least 3 errors in last two minutes
+                self.dimGrn();
+                self.flashRed();
+            } else {                            // error, but not 3 in last two minutes
+                self.stopFlash();
+                self.litGrn();       
+            }
         }
 
         function onComplete(jqXHR)   { // ajax call is finished, whether successful or not
