@@ -1,3 +1,4 @@
+
 -- create statements for config.db, exported from DB Browser (http://sqlitebrowser.org/)
 
 BEGIN TRANSACTION;

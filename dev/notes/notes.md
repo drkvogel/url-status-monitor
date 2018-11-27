@@ -4,6 +4,9 @@
 
 ## todo
 
+nginx is running on http://localhost:8080/
+
+
 
 venv?
 grok flask static folder
