@@ -1,7 +1,8 @@
 #!/bin/bash
 
 export FLASK_APP=server
-export FLASK_ENV=development
+# export FLASK_ENV=development
+# cd server
 flask run --host=0.0.0.0 --port=5000
 
 # in ./server/__init__.py, DB = './server/config.db' needs './server/' when run from run script in parent folder, why?
