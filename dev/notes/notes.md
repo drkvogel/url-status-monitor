@@ -4,38 +4,41 @@
 
 ## todo
 
+
+venv?
+grok flask static folder
+nginx serve static?
+dockerize
+
+grok status spec
+
+### Server status widget
+
+* The green light is dimmed and the red light is illuminated and set flashing if the HTTP status code has been something else than 200 at least 3 times during the past two minutes
+* The green light is illuminated and the red light is dimmed if the HTTP status code has been something else than 200 at most once during the past two minutes
+
+in the past two minutes:
+    n <= 1: green lit, red dim
+    n == 2: ?
+    n >= 3: green dim, red flashing
+
+what about when the status has been not 200 twice in the last two minutes?
+    error in spec must be part of the test...
+
+
+
+
+## defer
+
+getJSON().fail never called?
+    promises?
+
+make Flask server production-ready (debug off, ...?)
+
 hmmm... is escaping those quotes going to cause a problem for jinja? do they need to be escaped?
 ```html
 <script>window.jQuery || document.write('<script src="{{ url_for(\'static\', filename=\'js/vendor/jquery-3.3.1.min.js\') }}"><\/script>')</script>
 ```
-
-venv?
-
-### Server status widget
-
-remember, OO JS...
-new Button()?
->The constructor function is JavaScript's version of a class
-
-new TrafficLight(url, id?)
-
-configuration
-url
-
-story:
-got to [server]/configs?id=n
-select config id n from db
-join configs, link table, lights to get list of lights
-for each light
-    get the name and url
-generate a page (from a template) that has a div for each light
-creates a page with multiple lights from ids
-    how?
-the lights start checking
-
-## defer
-
-make Flask server production-ready (debug off, ...?)
 
 ### IIFE
 
@@ -83,6 +86,23 @@ Burned to death because of a rumour on WhatsApp - BBC News (https://www.bbc.co.u
 ## done
 
 link table to map lights to configs
+remember, OO JS...
+new Button()?
+>The constructor function is JavaScript's version of a class
+new TrafficLight(url, id?)
+need status pattern at /status to test, e.g. /status?pattern=1
+check urls
+
+story:
+got to [server]/configs?id=n
+select config id n from db
+join configs, link table, lights to get list of lights
+for each light
+    get the name and url
+generate a page (from a template) that has a div for each light
+creates a page with multiple lights from ids
+    how?
+the lights start checking
 
 ### scaffolding
 
