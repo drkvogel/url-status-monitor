@@ -6,6 +6,10 @@
 
 nginx is running on http://localhost:8080/
 
+event-stream vulnerability in dev folder
+Alerts · drkvogel/newsnow-test (https://github.com/drkvogel/newsnow-test/network/alerts)
+    event-stream - Google Search (https://www.google.co.uk/search?q=event-stream&oq=event-stream&aqs=chrome..69i57&sourceid=chrome&ie=UTF-8)
+        Widely used open source software contained bitcoin-stealing backdoor | Ars Technica (https://arstechnica.com/information-technology/2018/11/hacker-backdoors-widely-used-open-source-software-to-steal-bitcoin/)
 
 
 venv?
