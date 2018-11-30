@@ -4,6 +4,21 @@
 
 ## todo
 
+### release
+
+explain about status patterns
+query about spec: what about when the status has been not 200 twice in the last two minutes?
+no docker
+no nginx
+pip3 installed flask in ~/.local/bin, which had to be added to PATH
+not sure about IIFE in js
+joe thought it sounded like a real story
+using SVGs took a long time - maybe not the best choice
+Flask/Python was a good choice for a backend
+had to learn Flask
+
+---
+
 nginx is running on http://localhost:8080/
 
 event-stream vulnerability in dev folder
@@ -11,10 +26,8 @@ Alerts · drkvogel/newsnow-test (https://github.com/drkvogel/newsnow-test/networ
     event-stream - Google Search (https://www.google.co.uk/search?q=event-stream&oq=event-stream&aqs=chrome..69i57&sourceid=chrome&ie=UTF-8)
         Widely used open source software contained bitcoin-stealing backdoor | Ars Technica (https://arstechnica.com/information-technology/2018/11/hacker-backdoors-widely-used-open-source-software-to-steal-bitcoin/)
 
-
-venv?
 grok flask static folder
-nginx serve static?
+nginx serve static
 dockerize
 
 grok status spec
@@ -110,6 +123,8 @@ generate a page (from a template) that has a div for each light
 creates a page with multiple lights from ids
     how?
 the lights start checking
+
+venv
 
 ### scaffolding
 

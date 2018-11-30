@@ -6,8 +6,8 @@
 
 ```
 $ cd server
-# pip install requirements.txt?
-$ python server.py
+$ pip3 install -r requirements.txt
+$ python3 server.py
 ```
 
 ### Go to the main page
