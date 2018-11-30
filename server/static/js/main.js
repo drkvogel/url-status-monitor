@@ -1,5 +1,4 @@
 
-// (function () { // TODO IIFE?
     'use strict';
 
     function StatusPanel(id, name, url, freq, parent) {
@@ -16,12 +15,12 @@
 
         this.render = function() {
             var div = document.createElement('div'),
-                p1 = document.createElement('p'),
-                text1 = document.createTextNode(name),
-                p2 = document.createElement('p'),
-                text2 = document.createTextNode(url),
-                p3 = document.createElement('p'),
-                text3 = document.createTextNode('id: '+id),
+                namePara = document.createElement('p'),
+                nameText = document.createTextNode(name),
+                urlPara = document.createElement('p'),
+                urlText = document.createTextNode(url),
+                idPara = document.createElement('p'),
+                idText = document.createTextNode('id: '+id),
                 statusPara = document.createElement('p'),
                 statusText = document.createTextNode('Status: Unknown'),
                 object = document.createElement('object');
@@ -31,12 +30,12 @@
             object.setAttribute('type', 'image/svg+xml');
             object.setAttribute('data', '/static/img/lights.svg');
             div.appendChild(object);
-            p1.appendChild(text1)
-            div.appendChild(p1);
-            p2.appendChild(text2)
-            div.appendChild(p2);
-            p3.appendChild(text3);
-            div.appendChild(p3);
+            // namePara.appendChild(nameText)
+            div.appendChild(namePara);
+            urlPara.appendChild(urlText)
+            div.appendChild(urlPara);
+            idPara.appendChild(idText);
+            // div.appendChild(idPara);
             this.statusDiv = statusPara;
             statusPara.appendChild(statusText);
             div.appendChild(statusPara);
@@ -102,7 +101,6 @@
 
         function onSuccess() {
             var twoMinutesAgo = Date.now() - 120000; // 120000ms = 2 minutes
-            // console.log('twoMinutesAgo: ' + twoMinutesAgo);
             if (errors.length === 0 || errors[0] < twoMinutesAgo) {
                 self.stopFlash();
                 self.litGrn();
@@ -117,7 +115,6 @@
             errors.push(d);
             console.log("light id "+id+" errors: " + JSON.stringify(errors));
             var twoMinutesAgo = Date.now() - 120000;
-            // console.log('twoMinutesAgo: ' + twoMinutesAgo);
             if (errors.length >= 3 && errors[0] >= twoMinutesAgo) {   // at least 3 errors in last two minutes
                 self.dimGrn();
                 self.flashRed();
@@ -130,7 +127,6 @@
         function onComplete(jqXHR)   { // ajax call is finished, whether successful or not
             console.log("light id "+id+" onComplete, checked url: "+url+', status: '+jqXHR.status); //  jqXHR: '+JSON.stringify(jqXHR));
             $(self.statusDiv).text('Status: ' + jqXHR.status);
-
         }
         
         console.log('StatusPanel(id = '+id+', name='+name+', url='+this.url+', freq='+freq+')');
@@ -155,7 +151,5 @@
         });
     });
 
-// debugger;
-// }());
 
 console.log('main.js ready');
