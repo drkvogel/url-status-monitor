@@ -1,8 +1,9 @@
 #!/bin/bash
 
+PATH=$PATH:~/.local/bin	# pip3 installs to ~/.local/bin even if it's not in the PATH?
 export FLASK_APP=server
 # export FLASK_ENV=development
-# cd server
+
 flask run --host=0.0.0.0 --port=5000
 
 # in ./server/__init__.py, DB = './server/config.db' needs './server/' when run from run script in parent folder, why?
