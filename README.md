@@ -1,5 +1,7 @@
 
-# NewsNow Technical Test by Chris Bird (chrisjbird@gmail.com)
+# NewsNow Technical Test 
+
+by Chris Bird (chrisjbird@gmail.com)
 
 ## Installation
 
@@ -12,9 +14,12 @@ $ ./run
 
 Browse to `http://localhost:5000`
 
+## Usage
+
 Choose a configuration: 
 
-config 4 has four traffic lights:
+Config 4 has four traffic lights:
+
 * one that is 503 every other second
 * one that is down for 10 seconds per two minutes
 * one that is down for 20 seconds per two minutes
