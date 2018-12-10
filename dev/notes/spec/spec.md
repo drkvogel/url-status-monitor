@@ -1,7 +1,7 @@
 
-# NewsNow Full-stack Developer Exercise
+# Full-stack Developer Exercise
 
-All code you send us should be entirely your own, and should be of the quality you would expect to submit for a real NewsNow project.
+All code you send us should be entirely your own, and should be of the quality you would expect to submit for a real project.
 
 ## Server status widget
 
