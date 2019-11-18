@@ -34,7 +34,7 @@ def index():
         table += '<tr><td><a href="/dashboard?id=%s">%s</a></td><td>%s</td><td><a href="/getconfig?id=%s">JSON</a></td><td><a href="/showconfig?id=%s">Details</a></td></tr>\n' \
                     % (config['id'], config['name'], config['description'], config['id'], config['id'])
     table += '</table>\n'
-    return render_template('index.html', configs=table)
+    return render_template('index.html', configs=table, title='URL Status Monitor')
 
 def get_lights(config_id):
     query = (
@@ -87,7 +87,7 @@ def show_config():
                      % (light['light_id'], light['light_name'], light['light_url'], light['light_desc'])
         table += '</table>\n'
         return render_template('config.html', 
-            config_id=config_id, config_name=config['name'], config_desc=config['description'], lights=table)
+            config_id=config_id, config_name=config['name'], config_desc=config['description'], lights=table, title='URL Status Monitor')
     except:
         return "error getting config"
 
@@ -95,7 +95,7 @@ def show_config():
 @app.route('/dashboard')
 def dashboard():
     data_id = request.args.get('id')
-    return render_template('dashboard.html', data_id=data_id)
+    return render_template('dashboard.html', data_id=data_id, title='URL Status Monitor')
 
 @app.route('/status')
 def status():
@@ -105,7 +105,7 @@ def status():
         arg = request.args.get('code')
 
         if arg == None or arg == '':                            # show some links for testing
-            return render_template('status-none.html')
+            return render_template('status-none.html', title='URL Status Monitor')
 
         try:                                                    # return status code
             code = int(arg)
@@ -115,7 +115,7 @@ def status():
         
         try:
             if code == 200:                                     # 200 OK
-                return render_template('status-200.html')
+                return render_template('status-200.html', title='URL Status Monitor')
             else:                                               # error code
                 abort(code)         
                 # abort() will raise an error but we don't want to catch it unless it's a LookupError
