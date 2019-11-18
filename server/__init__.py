@@ -151,15 +151,6 @@ def status():
         except ValueError:                     
             abort(exceptions.BadRequest('argument %s not understood' % arg))
 
-@app.route('/test')
-def test():
-    # return 'test'
-    # pass # crashes flask
-    # abort(403)
-    # abort(Response('Hello World'))
-    # return str(datetime.now())
-    return render_template('test.html')
-
 if __name__ == '__main__':
     app.run(debug=True)
 
